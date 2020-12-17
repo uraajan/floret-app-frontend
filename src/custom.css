@@ -1,0 +1,159 @@
+button {
+    background-color: green;
+    height: 50px;
+    width: auto;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+}
+
+.registerUser, .loginUser {
+    padding: 10px;
+    border-radius: 5px;
+    width: 30%;
+    background-color: #f2f2f2;
+}
+
+input[type=text], input[type=password], input[type=number] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 0px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.labelKey {
+    padding-left: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.labelValue {
+    margin: 50px 0 20px 100px;
+}
+
+.lblOdd {
+    background-color: rgb(226, 226, 226);
+    width: 100%;
+    height: 50px;
+}
+
+.lblEven {
+    background-color: rgb(199, 199, 199);
+    width: 100%;
+    height: 50px;
+}
+
+.soapCard {
+    background-color: lightgray !important;
+    margin-top: 10px;
+}
+
+.soapName {
+    background-color: rgb(59, 48, 32);
+    color: rgb(194, 194, 194);
+}
+
+.displayInlineBlock {
+    display: inline-block;
+}
+
+.soapType {
+    font-style: italic;
+    font-weight: bold;
+    font-size: x-large;
+    font-family: "monotype corsiva";
+}
+
+.soapPrice {
+    text-decoration: line-through;
+}
+
+.soapDiscount {
+    color: rgb(82, 163, 82);
+}
+
+.soapDiscountedPrice {
+    color: rgb(0, 167, 0);
+}
+
+.soapCategory{
+    font-style: italic;
+}
+
+.soapImage {
+    width: 20%;
+}
+
+.btnAddRemoveCheckout {
+    background-color: rgb(194, 164, 110);
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+    color: white;
+}
+
+.btnGrayOut {
+    background-color: gray;
+    margin-bottom: 10px;
+    color: lightgray;
+    cursor: default;
+}
+
+.btnAddRemoveCheckout span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.btnAddRemoveCheckout span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 0px;
+    transition: 0.5s;
+}
+
+.btnAddRemoveCheckout:hover span {
+    padding-right: 15px;
+}
+
+.btnAddRemoveCheckout:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.cartItems {
+    width: 75%;
+}
+
+.cartspaceFill {
+    width: 5%;
+}
+
+.cartValue {
+    width: 20%;
+    vertical-align: top;
+    border: 1px solid black;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: lightgray;
+}
+
+.orderComponent {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px 20px 0 20px;
+}
