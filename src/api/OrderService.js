@@ -10,6 +10,12 @@ class OrderService {
 
     getOrdersForUser(username) {
         console.log("OrderService: getOrdersForUser")
+        return Axios.get(`${FloretConstants.REST_API_HOST_PORT}/orders/${username}`)
+    }
+
+    cancelOrderForUser(username, orderId) {
+        console.log("OrderService: cancelOrderForUser")
+        return Axios.delete(`${FloretConstants.REST_API_HOST_PORT}/orders/${username}/${orderId}`)
     }
 
 }

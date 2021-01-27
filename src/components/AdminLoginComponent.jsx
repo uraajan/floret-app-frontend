@@ -1,14 +1,14 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Component } from 'react'
+import { connect } from 'react-redux'
+import AdminService from '../api/AdminService'
 import AuthenticationService from '../api/AuthenticationService';
 import UserService from '../api/UserService';
 import * as actionTypes from '../store/constants';
 
-class LoginComponent extends Component {
+class AdminLoginComponent extends Component {
 
     constructor() {
-        super();
+        super()
 
         this.state = {
             password: "",
@@ -16,8 +16,8 @@ class LoginComponent extends Component {
         }
 
         this.handlePasswordChange = this.handlePasswordChange.bind(this)
+        this.adminLogin = this.adminLogin.bind(this)
         this.handleKeyDown = this.handleKeyDown.bind(this)
-        this.loginUser = this.loginUser.bind(this)
         this.validateUserInputs = this.validateUserInputs.bind(this)
         this.getUserByUsername = this.getUserByUsername.bind(this)
     }
@@ -30,7 +30,7 @@ class LoginComponent extends Component {
 
     handleKeyDown(event) {
         if (event.key === "Enter") {
-            this.loginUser();
+            this.adminLogin();
         }
         this.setState({
             loginFailure: false
@@ -38,13 +38,13 @@ class LoginComponent extends Component {
     }
 
     getUserByUsername() {
-        console.log("LoginComponent: getUserByUsername")
+        console.log("AdminLoginComponent: getUserByUsername")
         UserService.getUserByUsername(this.props.username)
             .then(response => {
-                AuthenticationService.setAdminLogin(false)
+                AuthenticationService.setAdminLogin(true)
                 this.props.handleFirstnameChange(response.data.firstName)
                 this.props.handleLastnameChange(response.data.lastName)
-                this.props.history.push("/home")
+                this.props.history.push("/admin-home")
             })
             .catch(error => {
                 if (error.response && error.response.data) {
@@ -55,32 +55,33 @@ class LoginComponent extends Component {
             })
     }
 
-    loginUser() {
-        console.log("LoginComponent: loginUser")
+    adminLogin() {
+        console.log("AdminLoginComponent: adminLogin")
         if (this.validateUserInputs()) {
-            AuthenticationService.authenticateUser(this.props.username, this.state.password)
+            AdminService.adminLogin(this.props.username, this.state.password)
                 .then(response => {
+                    console.log("Basic auth token: ", response.data.token)
                     AuthenticationService.registerSuccessfulLogin(this.props.username, response.data.token)
                     this.getUserByUsername()
-                })
-                .catch(error => {
-                    if (error.response && error.response.data) {
-                        console.log("Error response on user authenticate: ", error.response)
-                        this.setState({
-                            loginFailure: error.response.data
-                        })
-                    } else if (error.message) {
-                        console.log("Error message on user authenticate: ", error.message)
-                        this.setState({
-                            loginFailure: error.message
-                        })
-                    }
-                })
+            })
+            .catch(error => {
+                if (error.response && error.response.data) {
+                    console.log("Error response on admin authenticate: ", error.response)
+                    this.setState({
+                        loginFailure: error.response.data
+                    })
+                } else if (error.message) {
+                    console.log("Error message on admin authenticate: ", error.message)
+                    this.setState({
+                        loginFailure: error.message
+                    })
+                }
+            })            
         }
     }
 
     validateUserInputs() {
-        console.log("LoginComponent: validateUserInputs")
+        console.log("AdminLoginComponent: validateUserInputs")
         if (this.props.username === undefined || this.props.username === "") {
             this.setState({
                 loginFailure: "Please provide a valid username!"
@@ -100,21 +101,20 @@ class LoginComponent extends Component {
 
     render() {
         return (
-            <div align="center">
-                <h1>Welcome to Floret! Login</h1>
-                {this.state.loginFailure && <div className="alert alert-warning">{this.state.loginFailure}</div>}
-                <br />
-                <div className="loginUser">
-                    <input type="text" name="username" placeholder="Username" onChange={this.props.handleUsernameChange} onKeyDown={this.handleKeyDown} />
-                    <br /><br />
-                    <input type="password" name="password" placeholder="Password" onChange={this.handlePasswordChange} onKeyDown={this.handleKeyDown}/>
-                    <br /><br />
-                    <button onClick={this.loginUser}>Login</button>
+            <>
+                <div align="center">
+                    <h1>Floret Admin Login</h1>
+                    {this.state.loginFailure && <div className="alert alert-warning">{this.state.loginFailure}</div>}
+                    <div className="loginUser">
+                        <input type="text" name="username" placeholder="Username" onChange={this.props.handleUsernameChange} onKeyDown={this.handleKeyDown} />
+                        <br /><br />
+                        <input type="password" name="password" placeholder="Password" onChange={this.handlePasswordChange} onKeyDown={this.handleKeyDown}/>
+                        <br /><br />
+                        <button onClick={this.adminLogin}>Login</button>
+                    </div>
                 </div>
-                <br />
-                <h2>New to Floret? <Link to="/register">Register</Link> here!</h2>
-            </div>  
-        );
+            </>
+        )
     }
 
 }
@@ -133,4 +133,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminLoginComponent)

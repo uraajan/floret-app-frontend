@@ -4,6 +4,7 @@ import * as FloretConstants from "../floretConstants"
 class AuthenticationService {
 
     authHeader = ""
+    adminUserLogin = false
 
     registerUser(username, password, firstName, lastName, address, mobileNo) {
         console.log('AuthenticationService: registerUser')
@@ -49,7 +50,7 @@ class AuthenticationService {
                 console.log("Axios error response interceptor")
                 if (error.response && error.response.status) {
                     if (error.response.status === 401) {
-                        console.log("Session expired")
+                        console.log("Unauthorized")
                         this.logoutComplete()
                     } else {
                         return Promise.reject(error)
@@ -65,6 +66,16 @@ class AuthenticationService {
             return false
         }
         return true
+    }
+
+    isAdminLogin() {
+        console.log("AuthenticationService: isAdminLogin: ", this.adminUserLogin)
+        return this.adminUserLogin
+    }
+
+    setAdminLogin(adminLogin) {
+        console.log("AuthenticationService: setAdminLogin: ", adminLogin)
+        this.adminUserLogin = adminLogin
     }
 
     logout(username) {

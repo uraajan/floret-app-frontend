@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import CartService from '../api/CartService'
-import * as actionTypes from '../store/constants';
+import * as actionTypes from '../store/constants'
 
 class CardComponent extends Component {
 

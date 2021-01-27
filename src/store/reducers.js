@@ -4,10 +4,12 @@ const initialState = {
     username: "",
     firstName: "",
     lastName: "",
+    adminLogin: false,
     productCountMap: {},
     totalCartItems: 0,
     totalCartValue: 0,
-    lastOrderId: 0
+    lastOrderId: 0,
+    productIdToEdit: 0
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -70,6 +72,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 lastOrderId: action.lastOrderId
+            }
+        case actionTypes.SET_PRODUCT_ID_TO_EDIT:
+            console.log(actionTypes.SET_PRODUCT_ID_TO_EDIT)
+            return {
+                ...state,
+                productIdToEdit: action.productIdToEdit
             }
         default:
             return state
